@@ -49,8 +49,8 @@ public class MemoController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long id,
             @RequestBody CommentDto commentDto) {
-        memoService.addComment(id, userDetails.getUser(), commentDto);
-        notificationService.notifyAddCommentEvent(id);
+        Memo memo = memoService.addComment(id, userDetails.getUser(), commentDto);
+        notificationService.notifyAddCommentEvent(memo);
         return ResponseEntity.ok("ok");
     }
 }

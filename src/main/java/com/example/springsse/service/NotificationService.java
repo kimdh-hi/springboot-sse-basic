@@ -17,10 +17,8 @@ public class NotificationService {
 
     private final MemoRepository memoRepository;
 
-    public void notifyAddCommentEvent(Long memoId) {
-        Memo memo = memoRepository.findById(memoId).orElseThrow(
-                () -> new IllegalArgumentException("찾을 수 없는 메모입니다.")
-        );
+    public void notifyAddCommentEvent(Memo memo) {
+
         Long userId = memo.getUser().getId();
 
         if (sseEmitters.containsKey(userId)) {
