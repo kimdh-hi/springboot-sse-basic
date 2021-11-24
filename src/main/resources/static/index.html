@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script>
+    let subscribeUrl = "http://localhost:8080/sub";
+    $(document).ready(function() {
+        let eventSource = new EventSource(subscribeUrl);
+
+        // message라는 이름으로 발행된 이벤트에 대한 리스너
+        eventSource.addEventListener("message", function(event) {
+            console.log(event);
+            let data = JSON.parse(event.data);
+            $('#list').append(`<li>title: ${data.title} &nbsp; content: ${data.content}</li>`)
+        })
+
+        eventSource.addEventListener("error", function(event) {
+            eventSource.close()
+        })
+    })
+
+</script>
+
+<body>
+
+<ul id="list">
+
+</ul>
+
+</body>
+</html>
